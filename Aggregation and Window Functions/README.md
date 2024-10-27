@@ -371,13 +371,14 @@ INSERT INTO employees (id, name, dept, salary) VALUES
 Solution 1:Using Aggregation Function
 
 ```sql
-SELECT e.name, e.dept, e.salary
-FROM employees e
-JOIN (
-    SELECT dept, MAX(salary) AS max_salary
-    FROM employees
-    GROUP BY dept
-) d ON e.dept = d.dept AND e.salary = d.max_salary;
+SELECT name, dept, salary
+FROM Employees
+WHERE (dept, salary) IN
+    (
+        SELECT dept, MAX(salary) AS salary
+        FROM Employees
+        GROUP BY dept
+    );
 
 ```
 

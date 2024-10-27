@@ -1,15 +1,6 @@
 # 50 Important Databases Interview Questions
 
 <div>
-<p align="center">
-<a href="https://devinterview.io/questions/software-architecture-and-system-design/">
-<img src="https://firebasestorage.googleapis.com/v0/b/dev-stack-app.appspot.com/o/github-blog-img%2Fsoftware-architecture-and-system-design-github-img.jpg?alt=media&token=521fd2a9-0d56-49c0-a723-9bd6ca081893" alt="software-architecture-and-system-design" width="100%">
-</a>
-</p>
-
-#### You can also find all 50 answers here 👉 [Devinterview.io - Databases](https://devinterview.io/questions/software-architecture-and-system-design/databases-interview-questions)
-
-<br>
 
 ## 1. What is a _database management system (DBMS)_, and can you name some examples?
 
