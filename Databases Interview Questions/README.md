@@ -745,13 +745,3 @@ Here is the SQL code:
 <br>
 
 
-
-#### Explore all 50 answers here 👉 [Devinterview.io - Databases](https://devinterview.io/questions/software-architecture-and-system-design/databases-interview-questions)
-
-<br>
-
-<a href="https://devinterview.io/questions/software-architecture-and-system-design/">
-<img src="https://firebasestorage.googleapis.com/v0/b/dev-stack-app.appspot.com/o/github-blog-img%2Fsoftware-architecture-and-system-design-github-img.jpg?alt=media&token=521fd2a9-0d56-49c0-a723-9bd6ca081893" alt="software-architecture-and-system-design" width="100%">
-</a>
-</p>
-

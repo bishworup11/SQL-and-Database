@@ -4,7 +4,7 @@
 <details>
 
 <summary>
-  Problem 1:  Query to find the maximum salary in each department 
+  Problem :  Query to find the maximum salary in each department 
 </summary>
 
 Create table
@@ -82,7 +82,7 @@ WHERE rowNumber = 1;
 
 <details>
 
-<summary> Problem 2: Find the information on each salesperson of ABC Company</summary>
+<summary> Problem : Find the information on each salesperson of ABC Company</summary>
 
 ### Input Tables
 
@@ -148,7 +148,7 @@ ON
 
 
 <details>
-<summary>Problem 3: Find the Second highest sale. Return sale amount.</summary>
+<summary>Problem : Find the Second highest sale. Return sale amount.</summary>
 
 ### Create table and Insert data
 ```sql
@@ -229,7 +229,7 @@ FROM
 </details>
 
 <details>
-<summary>  Problem 4.write a SQL query to find the marks, which appear at least thrice one after another without interruption. Return the number
+<summary>  Problem : write a SQL query to find the marks, which appear at least thrice one after another without interruption. Return the number
 </summary>
 
 ```sql
@@ -365,8 +365,238 @@ WHERE p1.email_id = p2.email_id AND p1.employee_id != p2.employee_id;
 
 </details>
 
+ <!-- problem : Find those customers who never ordered anything -->
+<details>
+<summary>
+Problem : Find those customers who never ordered anything
+</summary>
+
+ ### Create Table And Insert Data
+
+```sql
+CREATE TABLE IF NOT EXISTS customers (customer_id int, customer_name varchar(255));
+TRUNCATE TABLE customers;
+INSERT INTO customers (customer_id, customer_name) VALUES ('101', 'Liam');
+INSERT INTO customers (customer_id, customer_name) VALUES ('102', 'Josh');
+INSERT INTO customers (customer_id, customer_name) VALUES ('103', 'Sean');
+INSERT INTO customers (customer_id, customer_name) VALUES ('104', 'Evan');
+INSERT INTO customers (customer_id, customer_name) VALUES ('105', 'Toby');	
+CREATE TABLE IF NOT EXISTS orders (order_id int, customer_id int, order_date Date, order_amount int);
+TRUNCATE TABLE orders;
+INSERT INTO orders (order_id, customer_id,order_date,order_amount) VALUES ('401', '103','2012-03-08','4500');
+INSERT INTO orders (order_id, customer_id,order_date,order_amount) VALUES ('402', '101','2012-09-15','3650');
+INSERT INTO orders (order_id, customer_id,order_date,order_amount) VALUES ('403', '102','2012-06-27','4800');
+INSERT INTO orders (order_id, customer_id,order_date,order_amount) VALUES ('404', '102','2012-06-27','4800');
+SELECT * FROM customers;
+SELECT * FROM orders;
 
 
+```
+
+### Show Table
+
+```
++-------------+---------------+
+| customer_id | customer_name |
++-------------+---------------+
+|         101 | Liam          |  
+|         102 | Josh          |
+|         103 | Sean          |
+|         104 | Evan          |
+|         105 | Toby          |
++-------------+---------------+
+
++----------+-------------+------------+--------------+
+| order_id | customer_id | order_date | order_amount |
++----------+-------------+------------+--------------+
+|      401 |         103 | 2012-03-08 |         4500 |
+|      402 |         101 | 2012-09-15 |         3650 |
+|      403 |         102 | 2012-06-27 |         4800 |
+|      404 |         102 | 2012-06-27 |         4800 |
++----------+-------------+------------+--------------+
+```
+### Solution
+
+```sql
+-- solve 1
+SELECT
+  c.customer_id,
+  c.customer_name
+FROM 
+  customers c 
+LEFT JOIN 
+  orders o ON c.customer_id = o.customer_id 
+WHERE 
+  o.customer_id IS NULL;
+
+-- solve 2
+
+SELECT 
+  customer_id,
+  customer_name
+FROM 
+  customers
+WHERE (customer_id) not IN 
+  (
+    SELECT customer_id from orders
+  );
+  
+  --solve 3
+
+SELECT
+  customer_id,
+  customer_name 
+FROM customers WHERE 0 = 
+(
+SELECT COUNT(*) FROM orders 
+WHERE customers.customer_id = orders.customer_id
+);
 
 
+```
 
+### Output
+
+```
++-------------+---------------+
+| customer_id | customer_name |
++-------------+---------------+
+|         104 | Evan          |
+|         105 | Toby          |
++-------------+---------------+
+```
+
+</details>
+
+<!-- Problem: SQL query to remove all the duplicate emails of employees keeping the unique email with the lowest employee id. Return employee id and unique emails -->
+
+<details>
+<summary>
+Problem : Remove all the duplicate emails of employees keeping the unique email with the lowest employee id. Return employee id and unique emails
+</summary>
+
+ ### Create Table And Insert Data
+
+```sql
+CREATE TABLE IF NOT EXISTS employees(employee_id int, employee_name varchar(255), email_id varchar(255));
+TRUNCATE TABLE employees;
+INSERT INTO employees (employee_id,employee_name, email_id) VALUES ('101','Liam Alton', 'li.al@abc.com');
+INSERT INTO employees (employee_id,employee_name, email_id) VALUES ('102','Josh Day', 'jo.da@abc.com');
+INSERT INTO employees (employee_id,employee_name, email_id) VALUES ('103','Sean Mann', 'se.ma@abc.com');	
+INSERT INTO employees (employee_id,employee_name, email_id) VALUES ('104','Evan Blake', 'ev.bl@abc.com');
+INSERT INTO employees (employee_id,employee_name, email_id) VALUES ('105','Toby Scott', 'jo.da@abc.com');
+SELECT * FROM employees;
+
+
+```
+
+### Show Table
+
+```
++-------------+---------------+---------------+
+| employee_id | employee_name | email_id      |
++-------------+---------------+---------------+
+|         101 | Liam Alton    | li.al@abc.com |
+|         102 | Josh Day      | jo.da@abc.com |
+|         103 | Sean Mann     | se.ma@abc.com |
+|         104 | Evan Blake    | ev.bl@abc.com |
+|         105 | Toby Scott    | jo.da@abc.com |
++-------------+---------------+---------------+
+```
+### Solution
+
+```sql
+
+DELETE e1 FROM employees e1,  employees e2
+WHERE
+    e1.email_id = e2.email_id AND e1.employee_id > e2.employee_id;
+    
+    
+SELECT * FROM employees;
+
+```
+
+### Output
+
+```
++-------------+---------------+---------------+
+| employee_id | employee_name | email_id      |
++-------------+---------------+---------------+
+|         101 | Liam Alton    | li.al@abc.com |
+|         102 | Josh Day      | jo.da@abc.com |
+|         103 | Sean Mann     | se.ma@abc.com |
+|         104 | Evan Blake    | ev.bl@abc.com |
++-------------+---------------+---------------+
+```
+
+</details>
+
+ <!-- Find all dates' city ID with higher pollution compared to its previous dates (yesterday). Return city ID, date and pollution.  -->
+
+<details>
+<summary>
+Problem :  Find all dates' city ID with higher pollution compared to its previous dates (yesterday). Return city ID, date and pollution.
+</summary>
+
+ ### Create Table And Insert Data
+
+```sql
+CREATE TABLE IF NOT EXISTS so2_pollution (city_id int, date date, so2_amt int);
+TRUNCATE TABLE so2_pollution;
+INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES ('701', '2015-10-15', '5');
+INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES ('702', '2015-10-16', '7');
+INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES ('703', '2015-10-17', '9');
+INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES ('704', '2018-10-18', '15');
+INSERT INTO so2_pollution (city_id, date, so2_amt) VALUES ('705', '2015-10-19', '14');
+SELECT * FROM so2_pollution;
+
+```
+
+### Show Table
+
+```
++---------+------------+---------+
+| city_id | date       | so2_amt |
++---------+------------+---------+
+|     701 | 2015-10-15 |       5 |
+|     702 | 2015-10-16 |       7 |
+|     703 | 2015-10-17 |       9 |
+|     704 | 2018-10-18 |      15 |
+|     705 | 2015-10-19 |      14 |
++---------+------------+---------+
+```
+### Solution
+
+```sql
+-- solve 1
+SELECT 
+  s1.city_id 
+from
+  so2_pollution s1 
+join  
+  so2_pollution s2
+on s1.date=ADDDATE(s2.date,1) and s1.so2_amt>s2.so2_amt;
+
+-- solve 2 
+SELECT 
+  s1.city_id 
+from
+  so2_pollution s1 
+join  
+  so2_pollution s2
+on DATEDIFF(s1.date,s2.date)=1 and s1.so2_amt>s2.so2_amt;
+
+```
+
+### Output
+
+```
++---------+
+| city_id |
++---------+
+|     702 |
+|     703 |
++---------+
+```
+
+</details>
